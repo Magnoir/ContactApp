@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.contactapp.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_listContactFragment"
+            app:destination="@id/listContactFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addContactFragment"
+        android:name="com.example.contactapp.AddContactFragment"
+        android:label="fragment_add_contact"
+        tools:layout="@layout/fragment_add_contact" />
+    <fragment
+        android:id="@+id/listContactFragment"
+        android:name="com.example.contactapp.ListContactFragment"
+        android:label="fragment_list_contact"
+        tools:layout="@layout/fragment_list_contact" >
+        <action
+            android:id="@+id/action_listContactFragment_to_addContactFragment"
+            app:destination="@id/addContactFragment" />
+        <action
+            android:id="@+id/action_listContactFragment_to_showContactFragment"
+            app:destination="@id/showContactFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/showContactFragment"
+        android:name="com.example.contactapp.ShowContactFragment"
+        android:label="fragment_show_contact"
+        tools:layout="@layout/fragment_show_contact">
+    <argument
+        android:name="selectedContact"
+        app:argType="com.example.contactapp.Contact" />
+    </fragment>
+</navigation>

@@ -1,0 +1,10 @@
+<!-- round_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <corners android:radius="100dp" /> <!-- Utilisez une valeur suffisamment grande pour obtenir un cercle -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/violet"
+        />
+</shape>
