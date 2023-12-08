@@ -10,9 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -21,7 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 
-class AddContactFragment : Fragment() {
+class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
 
     private val contactViewModel: ContactViewModel by activityViewModels()
     private val addContactViewModel: HoldImageViewModel by activityViewModels()
@@ -30,7 +28,6 @@ class AddContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Initialize the ActivityResultLauncher
         imagePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -41,24 +38,16 @@ class AddContactFragment : Fragment() {
             }
         }
 
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_add_contact, container, false)
-        imageView = view.findViewById(R.id.imageViewAddContact)
-        // Inflate the layout for this fragment
-        displaySelectedImage(addContactViewModel.selectedImageUri)
-        return view
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        imageView = view.findViewById(R.id.imageViewAddContact)
+        // Inflate the layout for this fragment
+        displaySelectedImage(null)
         view.findViewById<Button>(R.id.btnLoadImage).setOnClickListener {
             openImagePicker()
         }
-
         view.findViewById<Button>(R.id.btnAddContact).setOnClickListener {
             val editTextName = view.findViewById<EditText>(R.id.editTextName)
             val textName: String = editTextName.text.toString()
@@ -126,9 +115,6 @@ class AddContactFragment : Fragment() {
                 .placeholder(R.drawable.blanc)
                 .circleCrop()
                 .into(imageView)
-
-            // Apply the circular background after loading the image
-            imageView.setBackgroundResource(R.drawable.round_border)
         }
     }
 }

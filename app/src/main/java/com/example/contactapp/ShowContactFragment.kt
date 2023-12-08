@@ -15,15 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 
-class ShowContactFragment : Fragment() {
+class ShowContactFragment : Fragment(R.layout.fragment_show_contact) {
     private lateinit var imageView: ImageView
     private val contactViewModel: ContactViewModel by activityViewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_show_contact, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,8 +69,7 @@ class ShowContactFragment : Fragment() {
                 .circleCrop()
                 .into(imageView)
 
-            // Apply the circular background after loading the image
-            imageView.setBackgroundResource(R.drawable.round_border)
+
         }
     }
 }

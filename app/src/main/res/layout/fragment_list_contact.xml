@@ -24,12 +24,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewContact"
             android:layout_width="380dp"
-            android:layout_height="600dp"
+            android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btnGenerateContact"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView"
             app:layout_constraintVertical_bias="0.35" />
 
         <Button
