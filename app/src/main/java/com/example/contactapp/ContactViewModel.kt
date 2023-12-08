@@ -72,7 +72,7 @@ class ContactViewModel : ViewModel() {
     fun fetchContactFromApi() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                // Make the API call for one contact
+                //Calling the API
                 val url = URL("https://randomuser.me/api/?inc=name,phone,picture&nat=fr&results=1")
                 val connection = url.openConnection() as HttpURLConnection
 
@@ -97,12 +97,9 @@ class ContactViewModel : ViewModel() {
                     if (results.length() > 0) {
                         val user = results.getJSONObject(0)
 
-                        // Extracting image URLs
                         val largeImageUrl = user.getJSONObject("picture").getString("large")
 
-                        // Downloading the image
                         val largeBitmap = downloadImage(largeImageUrl)
-                        // You can do the same for medium and thumbnail sizes if needed
 
                         val newContact = Contact(
                             user.getJSONObject("name").getString("last"),
@@ -111,18 +108,18 @@ class ContactViewModel : ViewModel() {
                             largeBitmap
                         )
                         Log.d("Log",newContact.toString())
-                        // Update the ViewModel using the main dispatcher
+                        //Updating the ViewModel using the main dispatcher
                         withContext(Dispatchers.Main) {
                             saveContact(newContact)
                             _isLoading.value = false
                             Log.d("newContact", newContact.toString())
-                            // Notify the adapter that the data set has changed
+                            //Notify the adapter that the data set has changed
                             _newContactIndex.value = (listContacts.value?.size ?: 0) - 1
                         }
                     }
                 }
             } catch (e: Exception) {
-                // Handle any errors
+                //Handle errors
                 withContext(Dispatchers.Main) {
                     _isLoading.value = false
                     e.printStackTrace()

@@ -24,7 +24,6 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
         // Inflate the layout for this fragment
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // in here you can do logic when backPress is clicked
                 sharedPreferencesManager.saveLoginStatus(false)
                 findNavController().popBackStack()
             }
@@ -105,14 +104,13 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
             holder.textViewFirstname.text = currentContact.firstname
             holder.textViewPhoneNumber.text = currentContact.phoneNumber
 
-            // Utilisation de Glide pour charger l'image et appliquer le cadre rond
+            //Utilisation de Glide pour charger l'image et appliquer le cadre rond
             Glide.with(context)
-                .load(currentContact.image) // Image du ContactViewModel
-                .placeholder(R.drawable.blanc) // Image par défaut ou vide en cas d'échec du chargement
-                .circleCrop() // Appliquer le cadre rond
+                .load(currentContact.image) //Image du Contact
+                .placeholder(R.drawable.blanc) //fond blanc
+                .circleCrop() //cadre rond
                 .into(holder.imageViewContactList)
 
-            // Dans votre ContactAdapter, dans la méthode onBindViewHolder
             holder.itemView.setOnClickListener {
                 onItemClick(currentContact)
             }

@@ -58,7 +58,6 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
 
             val imageViewContact = view.findViewById<ImageView>(R.id.imageViewAddContact)
             if (textName.isNotEmpty() && textFirstname.isNotEmpty() && textPhone.isNotEmpty() && addContactViewModel.selectedImageUri != null) {
-                // Assuming you have a function to convert ImageView to Bitmap
                 val imageBitmap: Bitmap? = imageViewToBitmap(imageViewContact)
 
                 contactViewModel.saveContact(
@@ -72,7 +71,7 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
                 editTextName.setText("")
                 editTextFirstname.setText("")
                 editTextPhone.setText("")
-                imageViewContact.setImageResource(android.R.color.transparent) // Set to a transparent image or your default image
+                imageViewContact.setImageResource(android.R.color.transparent) //Setting to a transparent image
             }
             else {
                 val builder = AlertDialog.Builder(requireContext())
@@ -84,8 +83,6 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
             }
         }
     }
-
-    // Function to convert ImageView to Bitmap
     private fun imageViewToBitmap(imageView: ImageView): Bitmap? {
         val drawable = imageView.drawable
         val bitmap: Bitmap
@@ -93,7 +90,6 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
         if (drawable is BitmapDrawable) {
             bitmap = drawable.bitmap
         } else {
-            // If the drawable is not a BitmapDrawable, create a new Bitmap and draw the drawable on it
             bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, canvas.width, canvas.height)
@@ -108,7 +104,6 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
     }
 
     private fun displaySelectedImage(imageUri: Uri?) {
-        // Display the selected image in the ImageView
         if (imageUri != null) {
             Glide.with(requireContext())
                 .load(imageUri)

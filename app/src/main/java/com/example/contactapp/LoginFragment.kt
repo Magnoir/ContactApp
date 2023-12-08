@@ -30,20 +30,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val editTextPassword = view.findViewById<EditText>(R.id.editTextPassword)
 
         loginButton.setOnClickListener {
-            // Get the entered password
+            //Get the password
             val enteredPassword: String = editTextPassword.text.toString()
 
-            // Simulate login with a hardcoded password (you should securely handle passwords in a real app)
-            val correctPassword = "admin" // Replace with your actual password
+            //Simulate login with a hardcoded password
+            val correctPassword = "admin"
 
             if (enteredPassword == correctPassword) {
-                // Password is correct, save login status and navigate to the next fragment
+                //Password is correct so we save login status and navigate to the next fragment
                 editTextPassword.setText("")
                 sharedPreferencesManager.saveLoginStatus(true)
                 Toast.makeText(requireContext(), "Logged in", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_loginFragment_to_listContactFragment)
             } else {
-                // Password is incorrect, show a message or handle it accordingly
+                //Password is incorrect so we show a message
                 Toast.makeText(requireContext(), "Incorrect password", Toast.LENGTH_SHORT).show()
             }
         }
