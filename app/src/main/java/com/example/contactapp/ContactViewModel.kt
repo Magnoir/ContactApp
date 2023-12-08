@@ -55,7 +55,7 @@ class ContactViewModel : ViewModel() {
         return _listContacts.value?.sortedBy { it.firstname } ?: emptyList()
     }
 
-    fun downloadImage(imageUrl: String): Bitmap? {
+    private fun downloadImage(imageUrl: String): Bitmap? {
         return try {
             val url = URL(imageUrl)
             val connection = url.openConnection() as HttpURLConnection
@@ -70,7 +70,7 @@ class ContactViewModel : ViewModel() {
     }
 
     fun fetchContactFromApi() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Make the API call for one contact
                 val url = URL("https://randomuser.me/api/?inc=name,phone,picture&nat=fr&results=1")
@@ -110,14 +110,14 @@ class ContactViewModel : ViewModel() {
                             user.getString("phone"),
                             largeBitmap
                         )
-
+                        Log.d("Log",newContact.toString())
                         // Update the ViewModel using the main dispatcher
                         withContext(Dispatchers.Main) {
                             saveContact(newContact)
                             _isLoading.value = false
                             Log.d("newContact", newContact.toString())
                             // Notify the adapter that the data set has changed
-                            _newContactIndex.value = listContacts.value?.size ?: 0 - 1
+                            _newContactIndex.value = (listContacts.value?.size ?: 0) - 1
                         }
                     }
                 }
