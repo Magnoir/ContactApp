@@ -1,17 +1,35 @@
 package com.example.contactapp
-
-import org.junit.Test
-
+import androidx.lifecycle.MutableLiveData
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.mockito.Mockito.mock
+import org.mockito.Mockito
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.delay
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+@RunWith(JUnit4::class)
+class ContactViewModelTest {
+
+    private lateinit var viewModel: ContactViewModel
+
+    @Before
+    fun setup() {
+        viewModel = mock(ContactViewModel::class.java)
+        Mockito.`when`(viewModel.listContacts).thenReturn(MutableLiveData())
+    }
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun fetchContactFromApiTest() = runBlockingTest {
+        // Call the function to test
+        viewModel.fetchContactFromApi()
+
+        // Delay to wait for the result
+        delay(1000)
+
+        // Check the result
+        assertNotNull(viewModel.listContacts.value)
     }
 }
