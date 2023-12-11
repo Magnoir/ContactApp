@@ -50,4 +50,20 @@ class ContactViewModelAdditionalTests {
 
         assertEquals(0, viewModel.listContacts.value?.size)
     }
+    @Test
+    fun fetchContactFromApiTest() = runBlockingTest {
+        // Mock the Contact
+        val contact = mock(Contact::class.java)
+
+        // Call the method
+        viewModel.fetchContactFromApi()
+
+        // Verify that the contact was added to the list
+        val observer = mock(Observer::class.java) as Observer<MutableList<Contact>>
+        viewModel.listContacts.observeForever(observer)
+
+        // Since we can't predict the exact contact that will be fetched from the API,
+        // we can at least check that a contact was added to the list
+        assertEquals(1, viewModel.listContacts.value?.size)
+    }
 }

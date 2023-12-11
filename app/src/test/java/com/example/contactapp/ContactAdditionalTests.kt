@@ -2,6 +2,7 @@ package com.example.contactapp
 
 import android.graphics.Bitmap
 import android.os.Parcel
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,5 +42,13 @@ class ContactAdditionalTests {
 
         // Verify that the received data is not equal to the different contact
         assertNotEquals(differentContact, createdFromParcel)
+    }
+    @Test
+    fun contactDescribeContentsTest() {
+        // Create a Contact object
+        val contact = Contact("Doe", "John", "1234567890", null)
+
+        // Call the method and verify the result
+        assertEquals(0, contact.describeContents())
     }
 }
