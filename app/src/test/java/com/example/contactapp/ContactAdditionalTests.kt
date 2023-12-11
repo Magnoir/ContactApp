@@ -21,7 +21,26 @@ class ContactAdditionalTests {
         // Verify that the two objects are not equal
         assertNotEquals(contact1, contact2)
     }
+    @Test
+    fun contactEqualsTest() {
+        // Create two identical Contact objects
+        val contact1 = Contact("Doe", "John", "1234567890", null)
+        val contact2 = Contact("Doe", "John", "1234567890", null)
 
+        // Verify that the two objects are equal
+        assertEquals(contact1, contact2)
+    }
+    @Test
+    fun contactPropertiesTest() {
+        // Create a Contact object
+        val contact = Contact("Doe", "John", "1234567890", null)
+
+        // Verify that the properties are set correctly
+        assertEquals("Doe", contact.name)
+        assertEquals("John", contact.firstname)
+        assertEquals("1234567890", contact.phoneNumber)
+        assertEquals(null, contact.image)
+    }
     @Test
     fun contactParcelableNotEqualTest() {
         // Create two different Contact objects
@@ -51,4 +70,5 @@ class ContactAdditionalTests {
         // Call the method and verify the result
         assertEquals(0, contact.describeContents())
     }
+
 }
