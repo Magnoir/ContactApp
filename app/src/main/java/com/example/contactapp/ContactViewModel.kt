@@ -54,7 +54,7 @@ class ContactViewModel : ViewModel() {
         return _listContacts.value?.sortedBy { it.firstname } ?: emptyList()
     }
 
-    private fun downloadImage(imageUrl: String): Bitmap? {
+    fun downloadImage(imageUrl: String): Bitmap? {
         return try {
             val url = URL(imageUrl)
             val connection = url.openConnection() as HttpURLConnection
