@@ -1,5 +1,6 @@
 package com.example.contactapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +22,6 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
     private lateinit var sharedPreferencesManager: SharedPreferencesManager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Inflate the layout for this fragment
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 sharedPreferencesManager.saveLoginStatus(false)
@@ -47,6 +47,18 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
         contactViewModel.newContactIndex.observe(viewLifecycleOwner) { newIndex ->
             newIndex?.let {
                 recyclerView.adapter?.notifyItemInserted(newIndex)
+            }
+        }
+        // Observe the LiveData for failure scenario using Event wrapper
+        contactViewModel.isApiRequestFailed.observe(viewLifecycleOwner) { isFailed ->
+            if (isFailed) {
+                // API request failed, display alert dialog
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("No internet connection")
+                builder.setMessage("Please activate the internet to fetch a random contact!")
+                builder.setPositiveButton("OK", null)
+                val alertDialog = builder.create()
+                alertDialog.show()
             }
         }
         view.findViewById<Button>(R.id.btnAdd).setOnClickListener {

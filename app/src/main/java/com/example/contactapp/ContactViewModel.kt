@@ -1,5 +1,6 @@
 package com.example.contactapp
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Parcel
@@ -25,9 +26,12 @@ class ContactViewModel : ViewModel() {
     private val _newContactIndex: MutableLiveData<Int> = MutableLiveData()
     private val _selectedContact: MutableLiveData<Contact?> = MutableLiveData()
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _isApiRequestFailed = MutableLiveData<Boolean>()
+    val isApiRequestFailed: LiveData<Boolean> = _isApiRequestFailed
     val listContacts: LiveData<MutableList<Contact>> get() = _listContacts
     val isLoading: LiveData<Boolean> get() = _isLoading
     val newContactIndex: LiveData<Int> get() = _newContactIndex
+    private var hasFailedOnce = false
 
     init {
         _listContacts.value = mutableListOf()
@@ -54,7 +58,7 @@ class ContactViewModel : ViewModel() {
         return _listContacts.value?.sortedBy { it.firstname } ?: emptyList()
     }
 
-    fun downloadImage(imageUrl: String): Bitmap? {
+    private fun downloadImage(imageUrl: String): Bitmap? {
         return try {
             val url = URL(imageUrl)
             val connection = url.openConnection() as HttpURLConnection
@@ -111,6 +115,7 @@ class ContactViewModel : ViewModel() {
                         withContext(Dispatchers.Main) {
                             saveContact(newContact)
                             _isLoading.value = false
+                            hasFailedOnce = false
                             Log.d("newContact", newContact.toString())
                             //Notify the adapter that the data set has changed
                             _newContactIndex.value = (listContacts.value?.size ?: 0) - 1
@@ -120,8 +125,16 @@ class ContactViewModel : ViewModel() {
             } catch (e: Exception) {
                 //Handle errors
                 withContext(Dispatchers.Main) {
-                    _isLoading.value = false
-                    e.printStackTrace()
+                    withContext(Dispatchers.Main) {
+                        e.printStackTrace()
+                        // Handle failure
+                        _isLoading.value = false
+                        _isApiRequestFailed.value = true
+                        if (!hasFailedOnce) {
+                            _isApiRequestFailed.value = true
+                            hasFailedOnce = true
+                        }
+                    }
                 }
             }
         }
