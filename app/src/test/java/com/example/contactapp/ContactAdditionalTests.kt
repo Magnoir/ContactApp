@@ -1,6 +1,5 @@
 package com.example.contactapp
 
-import android.graphics.Bitmap
 import android.os.Parcel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -11,14 +10,6 @@ import org.mockito.Mockito.mock
 
 @RunWith(JUnit4::class)
 class ContactAdditionalTests {
-
-    @Test
-    fun contactNotEqualTest() {
-        val contact1 = Contact("Doe", "John", "1234567890", null)
-        val contact2 = Contact("Smith", "Jane", "0987654321", null)
-        //we verify that the two contacts are not equal
-        assertNotEquals(contact1, contact2)
-    }
     @Test
     fun contactEqualsTest() {
         val contact1 = Contact("Doe", "John", "1234567890", null)

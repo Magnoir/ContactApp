@@ -53,7 +53,6 @@ class ContactViewModelAdditionalTests {
     }
     @Test
     fun getSortedContactsTest() = runTest {
-        // Create and save multiple Contacts
         val contact1 = Contact("Doe", "John", "1234567890", null)
         val contact2 = Contact("Smith", "Jane", "0987654321", null)
         val contact3 = Contact("Brown", "Bob", "1122334455", null)
@@ -62,22 +61,20 @@ class ContactViewModelAdditionalTests {
         viewModel.saveContact(contact2)
         viewModel.saveContact(contact3)
 
-        // Get the sorted list of Contacts
+        //We get the sorted list of Contacts
         val sortedContacts = viewModel.getSortedContacts()
 
-        // Verify that the Contacts are sorted by firstname
+        //and verify that the Contacts are sorted by firstname
         val sortedByFirstname = sortedContacts.sortedBy { it.firstname }
         assertEquals(sortedByFirstname, sortedContacts)
     }
     @Test
     fun fetchContactFromApiTest() = runTest {
-        // Call the function to test
         viewModel.fetchContactFromApi()
 
-        // Delay to wait for the result
+        //we add a delay to wait for the result
         delay(2000)
 
-        // Check the result
         Assert.assertNotNull(viewModel.listContacts.value)
     }
 }
