@@ -2,6 +2,7 @@ import android.content.Context
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.launchActivity
 import com.example.contactapp.SharedPreferencesManager
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -85,5 +86,18 @@ class SharedPreferencesManagerTest {
         sharedPreferencesManager = SharedPreferencesManager(ApplicationProvider.getApplicationContext())
 
         assertEquals(true, sharedPreferencesManager.isLoggedIn())
+    }
+
+    @Test
+    fun clickAddContactButton() {
+        onView(withId(R.id.btnLogin)).check(matches(isDisplayed()))
+        // Fill the EditText
+        onView(withId(R.id.editTextPassword)).perform(typeText("admin"))
+        // Perform UI testing using Espresso
+        onView(withId(R.id.btnLogin)).perform(click())
+        // Perform a click on the add contact button
+        onView(withId(R.id.btnGenerateContact)).check(matches(isDisplayed()))
+        onView(withId(R.id.btnGenerateContact)).perform(click())
+
     }
 }
