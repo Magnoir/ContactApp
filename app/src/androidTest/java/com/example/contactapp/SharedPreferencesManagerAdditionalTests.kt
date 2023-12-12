@@ -1,4 +1,6 @@
 import android.content.Context
+import android.util.Log
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.test.core.app.ApplicationProvider
@@ -34,7 +36,6 @@ class SharedPreferencesManagerTest {
         fun setupClass() {
             val context = ApplicationProvider.getApplicationContext<Context>()
             sharedPreferencesManager = SharedPreferencesManager(context)
-            sharedPreferencesManager.saveLoginStatus(false)
         }
 
         @AfterClass
@@ -66,6 +67,7 @@ class SharedPreferencesManagerTest {
 
     @Test
     fun testDefaultLoginStatus() {
+        sharedPreferencesManager.saveLoginStatus(false)
         // Retrieve login status without saving it previously
         val isLoggedIn = sharedPreferencesManager.isLoggedIn()
 
@@ -74,27 +76,16 @@ class SharedPreferencesManagerTest {
     }
 
     @Test
-    fun testPasswordTyping() {
-        pressBack()
+    fun clickAddContactButton() {
+        sharedPreferencesManager.saveLoginStatus(false)
         onView(withId(R.id.btnLogin)).check(matches(isDisplayed()))
         // Fill the EditText
         onView(withId(R.id.editTextPassword)).perform(typeText("admin"))
         // Perform UI testing using Espresso
         onView(withId(R.id.btnLogin)).perform(click())
-
-        // Update the sharedPreferencesManager instance after login action
         sharedPreferencesManager = SharedPreferencesManager(ApplicationProvider.getApplicationContext())
 
         assertEquals(true, sharedPreferencesManager.isLoggedIn())
-    }
-
-    @Test
-    fun clickAddContactButton() {
-        onView(withId(R.id.btnLogin)).check(matches(isDisplayed()))
-        // Fill the EditText
-        onView(withId(R.id.editTextPassword)).perform(typeText("admin"))
-        // Perform UI testing using Espresso
-        onView(withId(R.id.btnLogin)).perform(click())
         // Perform a click on the add contact button
         onView(withId(R.id.btnGenerateContact)).check(matches(isDisplayed()))
         onView(withId(R.id.btnGenerateContact)).perform(click())
