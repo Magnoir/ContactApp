@@ -12,14 +12,9 @@ import androidx.navigation.fragment.findNavController
 class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var sharedPreferencesManager: SharedPreferencesManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedPreferencesManager = SharedPreferencesManager(requireContext())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        sharedPreferencesManager = SharedPreferencesManager(requireContext())
         if (sharedPreferencesManager.isLoggedIn()) {
             findNavController().navigate(R.id.action_loginFragment_to_listContactFragment)
         }

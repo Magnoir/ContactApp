@@ -65,7 +65,6 @@ class ShowContactFragment : Fragment(R.layout.fragment_show_contact) {
                 .circleCrop()
                 .into(imageView)
 
-
         }
     }
 }

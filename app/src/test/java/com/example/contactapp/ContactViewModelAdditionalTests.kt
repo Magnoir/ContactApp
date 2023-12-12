@@ -4,20 +4,19 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
 
-@ExperimentalCoroutinesApi
+
 @RunWith(JUnit4::class)
+@ExperimentalCoroutinesApi
 class ContactViewModelAdditionalTests {
 
     @get:Rule
@@ -30,7 +29,7 @@ class ContactViewModelAdditionalTests {
     }
 
     @Test
-    fun saveContactTest() = runBlockingTest {
+    fun saveContactTest() = runTest {
         val contact = Contact("Doe", "John", "1234567890", null)
         viewModel.saveContact(contact)
 
@@ -42,7 +41,7 @@ class ContactViewModelAdditionalTests {
     }
 
     @Test
-    fun deleteContactTest() = runBlockingTest {
+    fun deleteContactTest() = runTest {
         val contact = Contact("Doe", "John", "1234567890", null)
         viewModel.saveContact(contact)
         viewModel.deleteContact(contact)
@@ -52,29 +51,8 @@ class ContactViewModelAdditionalTests {
 
         assertEquals(0, viewModel.listContacts.value?.size)
     }
-    /*
     @Test
-    fun saveAndDeleteContactTest() = runBlockingTest {
-        // Create a Contact and save it
-        val contact = Contact("Doe", "John", "1234567890", null)
-        viewModel.saveContact(contact)
-
-        // Verify that the Contact was saved
-        val observer = mock(Observer::class.java) as Observer<MutableList<Contact>>
-        viewModel.listContacts.observeForever(observer)
-
-        assertEquals(1, viewModel.listContacts.value?.size)
-        assertEquals(contact, viewModel.listContacts.value?.get(0))
-
-        // Delete the Contact
-        viewModel.deleteContact(contact)
-
-        // Verify that the Contact was deleted
-        assertEquals(0, viewModel.listContacts.value?.size)
-    }
-     */
-    @Test
-    fun getSortedContactsTest() = runBlockingTest {
+    fun getSortedContactsTest() = runTest {
         // Create and save multiple Contacts
         val contact1 = Contact("Doe", "John", "1234567890", null)
         val contact2 = Contact("Smith", "Jane", "0987654321", null)
@@ -90,5 +68,16 @@ class ContactViewModelAdditionalTests {
         // Verify that the Contacts are sorted by firstname
         val sortedByFirstname = sortedContacts.sortedBy { it.firstname }
         assertEquals(sortedByFirstname, sortedContacts)
+    }
+    @Test
+    fun fetchContactFromApiTest() = runTest {
+        // Call the function to test
+        viewModel.fetchContactFromApi()
+
+        // Delay to wait for the result
+        delay(2000)
+
+        // Check the result
+        Assert.assertNotNull(viewModel.listContacts.value)
     }
 }

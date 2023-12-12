@@ -22,12 +22,11 @@ import java.net.URL
 class ContactViewModel : ViewModel() {
 
     private val _listContacts: MutableLiveData<MutableList<Contact>> = MutableLiveData()
-    val listContacts: LiveData<MutableList<Contact>> get() = _listContacts
-
+    private val _newContactIndex: MutableLiveData<Int> = MutableLiveData()
     private val _selectedContact: MutableLiveData<Contact?> = MutableLiveData()
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val listContacts: LiveData<MutableList<Contact>> get() = _listContacts
     val isLoading: LiveData<Boolean> get() = _isLoading
-    private val _newContactIndex: MutableLiveData<Int> = MutableLiveData()
     val newContactIndex: LiveData<Int> get() = _newContactIndex
 
     init {

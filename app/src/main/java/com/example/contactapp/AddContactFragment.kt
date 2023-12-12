@@ -26,9 +26,9 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
     private lateinit var imagePicker: ActivityResultLauncher<Intent>
     private lateinit var imageView: ImageView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Initialize the ActivityResultLauncher
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        imageView = view.findViewById(R.id.imageViewAddContact)// Initialize the ActivityResultLauncher
         imagePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // Handle the result here
@@ -38,21 +38,18 @@ class AddContactFragment : Fragment(R.layout.fragment_add_contact) {
             }
         }
 
-
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        imageView = view.findViewById(R.id.imageViewAddContact)
-        // Inflate the layout for this fragment
         displaySelectedImage(null)
+
         view.findViewById<Button>(R.id.btnLoadImage).setOnClickListener {
             openImagePicker()
         }
         view.findViewById<Button>(R.id.btnAddContact).setOnClickListener {
             val editTextName = view.findViewById<EditText>(R.id.editTextName)
             val textName: String = editTextName.text.toString()
+
             val editTextFirstname = view.findViewById<EditText>(R.id.editTextFirstName)
             val textFirstname: String = editTextFirstname.text.toString()
+
             val editTextPhone = view.findViewById<EditText>(R.id.editTextPhone)
             val textPhone: String = editTextPhone.text.toString()
 

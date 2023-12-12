@@ -31,7 +31,6 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
         sharedPreferencesManager = SharedPreferencesManager(requireContext())
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewContact)
-
         contactViewModel.listContacts.observe(viewLifecycleOwner) {
             val sortedContacts = contactViewModel.getSortedContacts()
             val contactAdapter = ContactAdapter(requireContext(), sortedContacts) { selectedContact ->
@@ -42,9 +41,6 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
             }
             recyclerView.adapter = contactAdapter
         }
-        view.findViewById<Button>(R.id.btnAdd).setOnClickListener {
-            findNavController().navigate(R.id.action_listContactFragment_to_addContactFragment)
-        }
         contactViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             showLoading(isLoading)
         }
@@ -52,6 +48,9 @@ class ListContactFragment : Fragment(R.layout.fragment_list_contact) {
             newIndex?.let {
                 recyclerView.adapter?.notifyItemInserted(newIndex)
             }
+        }
+        view.findViewById<Button>(R.id.btnAdd).setOnClickListener {
+            findNavController().navigate(R.id.action_listContactFragment_to_addContactFragment)
         }
         view.findViewById<Button>(R.id.btnGenerateContact).setOnClickListener {
             showLoading(true)
